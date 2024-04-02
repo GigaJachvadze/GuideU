@@ -1,0 +1,32 @@
+<div style="margin-bottom: 25px;">
+  <input type="number" [(ngModel)]="shiftsToGenerate" (change)="log()" placeholder="shifts to generate">
+  <input type="number" [(ngModel)]="requiredWorkers" placeholder="required workers">
+  <input type="date" (change)="generateWorkDays()" [ngModel]="fromDate | date:'yyyy-MM-dd'" (ngModelChange)="fromDate = $event">
+  <button (click)="generate()">GENERATE!</button>
+</div>
+
+<div style="display: flex; justify-content: space-between;">
+  <div style="display: flex; flex-direction: column;">
+    <div *ngFor="let item of employees;">
+      <button (click)="selectEmploy(item)">{{item.name}}</button>
+    </div>
+    <div>
+      <input #name type="text" placeholder="employ name">
+      <button (click)="addEmploy(name.value); name.value = '';">+</button>
+    </div>
+  </div>
+  <div *ngIf="selectedEmployee" style="display: flex; flex-direction: column; width: 40%;">
+    <div>
+      <h2>{{selectedEmployee.name}}</h2>
+    </div>
+    <select name="" id="" (change)="selectNonWorkDays($event)">
+      <option [value]="null">-</option>
+      <option *ngFor="let shift of shifts;" [value]="shift.shiftId">{{shift.date.getDate()}} - {{shift.isNight? "ღამე" : "დღე"}}</option>
+    </select>
+    <div style="display: flex; flex-wrap: wrap;">
+      <button *ngFor="let nonWorking of selectedEmployee.nonAvailableIds" style="margin: 14px;" (click)="removeNonWorkDays(nonWorking)">{{ shifts[nonWorking].date.getDate() }} - {{shifts[nonWorking].isNight? "ღამე" : "დღე"}}</button>
+    </div>
+  </div>
+</div>
+
+<span [innerHTML]="outputText"></span>
