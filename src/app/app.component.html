@@ -1,3 +1,13 @@
+<div class="min-h-full">
+  <app-header></app-header>
+
+  <main>
+    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
+
 <div style="margin-bottom: 25px;">
   <input type="number" [(ngModel)]="shiftsToGenerate" (change)="log()" placeholder="shifts to generate">
   <input type="number" [(ngModel)]="requiredWorkers" placeholder="required workers">
